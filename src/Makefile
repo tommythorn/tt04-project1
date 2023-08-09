@@ -1,5 +1,4 @@
 # Makefile
-# See https://docs.cocotb.org/en/stable/quickstart.html for more info
 
 # defaults
 SIM ?= icarus
@@ -9,7 +8,7 @@ TOPLEVEL_LANG ?= verilog
 ifneq ($(GATES),yes)
 
 # this is the only part you should need to modify:
-VERILOG_SOURCES += $(PWD)/tb.v $(PWD)/tt_um_seven_segment_seconds.v $(PWD)/decoder.v
+VERILOG_SOURCES += $(PWD)/tb.v $(PWD)/tt_um_project1.v
 
 else
 
@@ -29,8 +28,10 @@ endif
 # TOPLEVEL is the name of the toplevel module in your Verilog or VHDL file
 TOPLEVEL = tb
 
-# MODULE is the basename of the Python test file
-MODULE = test
+results.xml:
+	touch results.xml
+	iverilog -o tt_um_project1 -DSIM tb.v tt_um_project1.v
+	./tt_um_project1 > results.xml
 
-# include cocotb's make rules to take care of the simulator setup
-include $(shell cocotb-config --makefiles)/Makefile.sim
+clean:
+	-rm -f tt_um_project1
