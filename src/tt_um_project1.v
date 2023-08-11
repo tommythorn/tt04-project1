@@ -36,10 +36,12 @@ module tt_um_project1 #( parameter MAX_COUNT = 24'd10_000_000 ) (
    (* keep = "true" *) sky130_fd_sc_hd__inv_1 CLKINV(.Y(dummy), .A(latch1_d));
 
    assign uo_out = {5'd0, latch3_q, latch2_q, latch1_q};
+   assign uio_out = 8'd0;
+   assign uio_oe = 8'd0;
 endmodule
 
 `ifdef SIM
-module sky130_fd_sc_hd__maj3 (
+module sky130_fd_sc_hd__maj3_1 (
     output X,
     input  A,
     input  B,
