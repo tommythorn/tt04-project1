@@ -29,8 +29,12 @@ module tt_um_project1 #( parameter MAX_COUNT = 24'd10_000_000 ) (
    assign latch2_qn = !(latch2_b & latch2_q);
    
    wire		      latch3_q;
-   sky130_fd_sc_hd__maj3 sky130_fd_sc_hd__maj3(.X(latch3_q), .A(latch3_a), .B(latch3_b), .C(latch3_q));
+   (* keep = "true" *) sky130_fd_sc_hd__maj3 __cell__(.X(latch3_q), .A(latch3_a), .B(latch3_b), .C(latch3_q));
    
+   // Sanity checking
+   wire		      dummy;
+   (* keep = "true" *) sky130_fd_sc_hd__inv_1 CLKINV(.Y(dummy), .A(latch1_d));
+
    assign uo_out[0] = latch1_q;
    assign uo_out[1] = latch2_q;
    assign uo_out[2] = latch3_q;
@@ -44,5 +48,12 @@ module sky130_fd_sc_hd__maj3 (
     input  C
 );
    assign X = A & B | C & (A | B);
+endmodule
+
+module sky130_fd_sc_hd__inv_1 (
+    output Y,
+    input  A
+);
+   assign Y = !A;
 endmodule
 `endif
