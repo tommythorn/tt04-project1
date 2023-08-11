@@ -35,9 +35,7 @@ module tt_um_project1 #( parameter MAX_COUNT = 24'd10_000_000 ) (
    wire		      dummy;
    (* keep = "true" *) sky130_fd_sc_hd__inv_1 CLKINV(.Y(dummy), .A(latch1_d));
 
-   assign uo_out[0] = latch1_q;
-   assign uo_out[1] = latch2_q;
-   assign uo_out[2] = latch3_q;
+   assign uo_out = {5'd0, latch3_q, latch2_q, latch1_q};
 endmodule
 
 `ifdef SIM
