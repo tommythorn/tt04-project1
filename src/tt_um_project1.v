@@ -29,7 +29,7 @@ module tt_um_project1 #( parameter MAX_COUNT = 24'd10_000_000 ) (
    assign latch2_qn = !(latch2_b & latch2_q);
    
    wire		      latch3_q;
-   (* keep = "true" *) sky130_fd_sc_hd__maj3 __cell__(.X(latch3_q), .A(latch3_a), .B(latch3_b), .C(latch3_q));
+   (* keep = "true" *) sky130_fd_sc_hd__maj3_1 maj(.X(latch3_q), .A(latch3_a), .B(latch3_b), .C(latch3_q));
    
    // Sanity checking
    wire		      dummy;
