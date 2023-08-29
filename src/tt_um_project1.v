@@ -11,35 +11,19 @@ module tt_um_project1 #( parameter MAX_COUNT = 24'd10_000_000 ) (
     input  wire       rst_n     // reset_n - low to reset
 );
 
-   wire		      latch1_d  = ui_in[0];
-   wire		      latch1_we = ui_in[1];
-   wire		      latch2_a  = ui_in[2];
-   wire		      latch2_b  = ui_in[3];
-   wire		      latch3_a  = ui_in[4];
-   wire		      latch3_b  = ui_in[5];
-   
-   reg		      latch1_q;
-   always @(*)
-     if (latch1_we)
-       latch1_q = latch1_d;
+   wire		      A = ui_in[0];
+   wire		      B = ui_in[1];
+   wire		      C = ui_in[2];
 
-   wire		      latch2_q;
-   wire		      latch2_qn;
-   assign latch2_q = !(latch2_a & latch2_qn);
-   assign latch2_qn = !(latch2_b & latch2_q);
-   
-   wire		      latch3_q;
-   (* keep = "true" *) sky130_fd_sc_hd__maj3_1 maj(.X(latch3_q), .A(latch3_a), .B(latch3_b), .C(latch3_q));
-   
-   // Sanity checking
-   wire		      dummy;
-   (* keep = "true" *) sky130_fd_sc_hd__inv_1 CLKINV(.Y(dummy), .A(latch1_d));
+   wire		      X;
+   assign X = A & B & C  |  X & (A | B | C); // This should map to two gates
 
-   assign uo_out = {5'd0, latch3_q, latch2_q, latch1_q};
+   assign uo_out = {7'd0, X};
    assign uio_out = 8'd0;
    assign uio_oe = 8'd0;
 endmodule
 
+/*
 `ifdef SIM
 module sky130_fd_sc_hd__maj3_1 (
     output X,
@@ -57,3 +41,4 @@ module sky130_fd_sc_hd__inv_1 (
    assign Y = !A;
 endmodule
 `endif
+*/
