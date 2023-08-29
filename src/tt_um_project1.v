@@ -19,8 +19,10 @@ module tt_um_project1 #( parameter MAX_COUNT = 24'd10_000_000 ) (
    // getting a31o_1 and o31a_1
    // wire		      C = ui_in[2];
    // assign X = A & B & C  |  X & (A | B | C);
-   // This can actually map to MAJ3
+   // This can actually map to MAJ3, but it's mapped to a21o + o21a
    assign X = A & B  |  X & (A | B);
+   // ?
+   assign X = A & !B  |  X & (A | !B);
 
    assign uo_out = {7'd0, X};
    assign uio_out = 8'd0;
