@@ -13,10 +13,14 @@ module tt_um_project1 #( parameter MAX_COUNT = 24'd10_000_000 ) (
 
    wire		      A = ui_in[0];
    wire		      B = ui_in[1];
-   wire		      C = ui_in[2];
 
    wire		      X;
-   assign X = A & B & C  |  X & (A | B | C); // This should map to two gates
+   // This should map to two gates and indeed, it looks like I'm
+   // getting a31o_1 and o31a_1
+   // wire		      C = ui_in[2];
+   // assign X = A & B & C  |  X & (A | B | C);
+   // This can actually map to MAJ3
+   assign X = A & B  |  X & (A | B);
 
    assign uo_out = {7'd0, X};
    assign uio_out = 8'd0;
